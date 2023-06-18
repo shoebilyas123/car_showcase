@@ -6,3 +6,8 @@ export interface ICustomButton {
   title: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
+
+export interface ISearchManufacturerProps {
+  manufacturer: string;
+  setManufacturer: (manufacturer: string) => void;
+}
