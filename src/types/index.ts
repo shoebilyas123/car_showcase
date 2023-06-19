@@ -5,6 +5,8 @@ export interface ICustomButton {
   type?: 'button' | 'submit';
   title: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
+  textStyles?: string;
+  rightIcon?: string;
 }
 
 export interface ISearchManufacturerProps {
@@ -25,4 +27,10 @@ export interface ICarProps {
   model: string;
   transmission: string;
   year: number;
+}
+
+export interface ICarDetailsProps {
+  car: ICarProps;
+  isOpen: boolean;
+  closeModal: () => void;
 }
