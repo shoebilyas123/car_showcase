@@ -1,6 +1,6 @@
 import { ICarProps, IFetchCarsParams } from "~/types";
 
-const axios = require("axios");
+import axios from "axios";
 
 export async function fetchCars(filters: IFetchCarsParams) {
   try {
@@ -9,8 +9,8 @@ export async function fetchCars(filters: IFetchCarsParams) {
       url: "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars",
       params: { ...filters },
       headers: {
-        "X-RapidAPI-Key": process.env.NEXT_RAPIDAPI_KEY,
-        "X-RapidAPI-Host": process.env.NEXT_RAPIDAPI_HOST,
+        "X-RapidAPI-Key": "3f39b3432cmsh3b77398ba9da095p1885efjsnaa514d8023e5",
+        "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
       },
     };
     const response = await axios.request(options);

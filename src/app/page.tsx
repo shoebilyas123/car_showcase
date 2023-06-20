@@ -1,17 +1,49 @@
+"use client";
+
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { CarCard, CustomFilter, Hero, SearchBar } from "~/components";
+import ShowMore from "~/components/ShowMore";
 import { fuels, yearsOfProduction } from "~/constants";
 import { fetchCars } from "~/utils";
 
-export default async function Home({ searchParams }) {
-  const allCars = await fetchCars({
-    manufacturer: searchParams?.manufacturer || "",
-    model: searchParams?.model || "carrera",
-    limit: searchParams?.limit || 10,
-    fuel: searchParams?.fuel || "",
-    year: searchParams?.year || 2022,
-  });
+export default async function Home() {
+  const [allCars, setAllCars] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  // Search states
+  const [manufacturer, setManufacturer] = useState("");
+  const [model, setModel] = useState("");
+
+  // Filter states
+  const [fuel, setFuel] = useState("");
+  const [year, setYear] = useState(2022);
+
+  // Pagination States
+  const [limit, setLimit] = useState(10);
+
+  const getCars = async () => {
+    try {
+      setLoading(true);
+      const result = await fetchCars({
+        manufacturer: manufacturer || "",
+        model: model || "carrera",
+        limit: limit || 10,
+        fuel: fuel || "",
+        year: year || 2022,
+      });
+      setAllCars(result);
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getCars();
+  }, []);
+
   const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
   return (
@@ -31,10 +63,16 @@ export default async function Home({ searchParams }) {
         </div>
 
         {!isDataEmpty ? (
-          <section className="home__cars-wrapper">
-            {allCars?.map((car) => (
-              <CarCard car={car} />
-            ))}
+          <section>
+            <div className="home__cars-wrapper">
+              {allCars?.map((car) => (
+                <CarCard car={car} />
+              ))}
+            </div>
+            <ShowMore
+              isNext={limit > allCars.length}
+              pageNumber={(limit || 10) / 10}
+            />
           </section>
         ) : (
           <div className="home__error-container">
