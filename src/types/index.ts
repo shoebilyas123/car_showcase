@@ -1,8 +1,8 @@
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler } from "react";
 
 export interface ICustomButton {
   containerStyles?: string;
-  type?: 'button' | 'submit';
+  type?: "button" | "submit";
   title: string;
   handleClick?: MouseEventHandler<HTMLButtonElement>;
   textStyles?: string;
@@ -33,4 +33,22 @@ export interface ICarDetailsProps {
   car: ICarProps;
   isOpen: boolean;
   closeModal: () => void;
+}
+
+export interface IFetchCarsParams {
+  manufacturer: string;
+  model: string;
+  limit: number;
+  fuel: string;
+  year: number;
+}
+
+export interface OptionProps {
+  title: string;
+  value: string;
+}
+
+export interface ICustomFilter {
+  options: OptionProps[];
+  title: string;
 }

@@ -36,7 +36,7 @@ const CarDetails = ({ car, isOpen, closeModal }: ICarDetailsProps) => {
               >
                 <Dialog.Panel
                   className={
-                    "relative max-h-[90vh] w-full max-w-lg overflow-y-auto transform rounded-2xl bg-white text-left shadow-xl transition-all flex flex-col gap-5"
+                    "relative max-h-[90vh] w-full max-w-lg overflow-y-auto transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex flex-col gap-5"
                   }
                 >
                   <button
@@ -61,6 +61,54 @@ const CarDetails = ({ car, isOpen, closeModal }: ICarDetailsProps) => {
                         priority
                         className="object-contain"
                       />
+                    </div>
+                    <div className="flex gap-3">
+                      <div className="flex-1 relative w-full h-24 rounded-lg bg-primary-blue-100">
+                        <Image
+                          src={"/hero.png"}
+                          alt="Car Model"
+                          fill
+                          priority
+                          className="object-contain"
+                        />
+                      </div>
+                      <div className="flex-1 relative w-full h-24 rounded-lg bg-primary-blue-100">
+                        <Image
+                          src={"/hero.png"}
+                          alt="Car Model"
+                          fill
+                          priority
+                          className="object-contain"
+                        />
+                      </div>
+                      <div className="flex-1 relative w-full h-24 rounded-lg bg-primary-blue-100">
+                        <Image
+                          src={"/hero.png"}
+                          alt="Car Model"
+                          fill
+                          priority
+                          className="object-contain"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex-1 flex flex-col gap-2">
+                    <h2 className="font-semibold text-xl capitalize">
+                      {car.make} {car.model}
+                    </h2>
+
+                    <div className="mt-3 flex flex-wrap gap-5">
+                      {Object.entries(car).map(([carPropKey, carPropValue]) => (
+                        <div className="flex justify-between gap-2 w-full text-right">
+                          <h4 className="text-grey capitalize">
+                            {carPropKey.split("_").join(" ")}
+                          </h4>{" "}
+                          <p className="text-black font-semibold">
+                            {carPropValue}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </Dialog.Panel>
