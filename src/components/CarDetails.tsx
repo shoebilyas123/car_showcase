@@ -100,7 +100,10 @@ const CarDetails = ({ car, isOpen, closeModal }: ICarDetailsProps) => {
 
                     <div className="mt-3 flex flex-wrap gap-5">
                       {Object.entries(car).map(([carPropKey, carPropValue]) => (
-                        <div className="flex justify-between gap-2 w-full text-right">
+                        <div
+                          key={carPropKey + Math.random().toString(12)}
+                          className="flex justify-between gap-2 w-full text-right"
+                        >
                           <h4 className="text-grey capitalize">
                             {carPropKey.split("_").join(" ")}
                           </h4>{" "}
