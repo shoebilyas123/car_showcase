@@ -51,7 +51,6 @@ export interface OptionProps {
 export interface ICustomFilter {
   options: OptionProps[];
   title: string;
-  setFilter: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export interface ISearchBarParams {

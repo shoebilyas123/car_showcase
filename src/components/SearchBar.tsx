@@ -20,7 +20,7 @@ const SearchButton = ({ otherClasses }: { otherClasses: string }) => {
   );
 };
 
-const SearchBar = ({ setModel, setManufacturer }: ISearchBarParams) => {
+const SearchBar = () => {
   const [searchManufacturer, setSearchManufacturer] = useState("");
   const [searchModel, setSearchModel] = useState("");
 
@@ -33,8 +33,10 @@ const SearchBar = ({ setModel, setManufacturer }: ISearchBarParams) => {
       alert("Please fill in the search inputs");
     }
 
-    setModel(searchModel);
-    setManufacturer(searchManufacturer);
+    updateSearchParams(
+      searchModel.toLowerCase(),
+      searchManufacturer.toLowerCase()
+    );
   };
 
   const updateSearchParams = (model: string, manufacturer: string) => {
@@ -48,7 +50,8 @@ const SearchBar = ({ setModel, setManufacturer }: ISearchBarParams) => {
     } else searchParams.delete("manufacturer");
 
     let newPathName = `${window.location.pathname}?${searchParams.toString()}`;
-    router.push(newPathName);
+    localStorage.setItem("persistentScroll", window.scrollY.toString());
+    router.push(`${newPathName}#discover`);
   };
 
   return (

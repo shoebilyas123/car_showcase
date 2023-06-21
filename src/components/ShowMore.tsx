@@ -8,18 +8,17 @@ import { updateSearchParams } from "~/utils";
 interface IShowMoreProps {
   isNext: boolean;
   pageNumber: number;
-  setLimit: (limit: number) => void;
 }
 
-const ShowMore = ({ isNext, pageNumber, setLimit }: IShowMoreProps) => {
+const ShowMore = ({ isNext, pageNumber }: IShowMoreProps) => {
   const router = useRouter();
 
   const handleNavigation = () => {
     const newLimit = (pageNumber + 1) * 10;
-    setLimit(newLimit);
 
     const newPath = updateSearchParams("limit", `${newLimit}`);
-    router.push(newPath);
+    localStorage.setItem("persistentScroll", window.scrollY.toString());
+    router.push(`${newPath}#cars-container`);
   };
 
   return (

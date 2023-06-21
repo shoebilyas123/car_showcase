@@ -7,13 +7,14 @@ import { useRouter } from "next/navigation";
 import { ICustomFilter } from "~/types";
 import { updateSearchParams } from "~/utils";
 
-const CustomFilter = ({ options, title, setFilter }: ICustomFilter) => {
+const CustomFilter = ({ options, title }: ICustomFilter) => {
   const [selected, setSelected] = useState(options[0].value);
   const router = useRouter();
 
   const handleUpdateParams = (value: string) => {
     const newURLPathname = updateSearchParams(title, value);
-    router.push(newURLPathname);
+    localStorage.setItem("persistentScroll", window.scrollY.toString());
+    router.push(`${newURLPathname}#discover`);
   };
 
   return (
@@ -22,8 +23,7 @@ const CustomFilter = ({ options, title, setFilter }: ICustomFilter) => {
         value={selected}
         onChange={(e) => {
           setSelected(e);
-          // handleUpdateParams(e);
-          setFilter(e);
+          handleUpdateParams(e);
         }}
       >
         <div className="relative z-10 w-fit">
