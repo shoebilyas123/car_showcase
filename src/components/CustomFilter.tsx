@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { ICustomFilter } from "~/types";
 import { updateSearchParams } from "~/utils";
 
-const CustomFilter = ({ options, title }: ICustomFilter) => {
+const CustomFilter = ({ options, title, setFilter }: ICustomFilter) => {
   const [selected, setSelected] = useState(options[0].value);
   const router = useRouter();
 
@@ -22,7 +22,8 @@ const CustomFilter = ({ options, title }: ICustomFilter) => {
         value={selected}
         onChange={(e) => {
           setSelected(e);
-          handleUpdateParams(e);
+          // handleUpdateParams(e);
+          setFilter(e);
         }}
       >
         <div className="relative z-10 w-fit">

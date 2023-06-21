@@ -36,7 +36,7 @@ export interface ICarDetailsProps {
 }
 
 export interface IFetchCarsParams {
-  manufacturer: string;
+  make: string;
   model: string;
   limit: number;
   fuel: string;
@@ -51,4 +51,5 @@ export interface OptionProps {
 export interface ICustomFilter {
   options: OptionProps[];
   title: string;
+  setFilter: React.Dispatch<React.SetStateAction<any>>;
 }

@@ -13,6 +13,7 @@ export async function fetchCars(filters: IFetchCarsParams) {
         "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
       },
     };
+    console.log(filters);
     const response = await axios.request(options);
     console.log(response.data);
     return response.data;

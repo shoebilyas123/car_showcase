@@ -1,13 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { CarCard, CustomFilter, Hero, SearchBar } from "~/components";
 import ShowMore from "~/components/ShowMore";
 import { fuels, yearsOfProduction } from "~/constants";
 import { fetchCars } from "~/utils";
 
-export default async function Home() {
+const Home = async () => {
   const [allCars, setAllCars] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -15,26 +16,23 @@ export default async function Home() {
   const [manufacturer, setManufacturer] = useState("");
   const [model, setModel] = useState("");
 
-  // Filter states
+  // Filters states
   const [fuel, setFuel] = useState("");
   const [year, setYear] = useState(2022);
-
-  // Pagination States
   const [limit, setLimit] = useState(10);
 
   const getCars = async () => {
     try {
-      setLoading(true);
       const result = await fetchCars({
-        manufacturer: manufacturer || "",
-        model: model || "carrera",
+        make: manufacturer || "",
+        model: model || "",
         limit: limit || 10,
         fuel: fuel || "",
         year: year || 2022,
       });
       setAllCars(result);
     } catch (error) {
-      console.log({ error });
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -42,9 +40,9 @@ export default async function Home() {
 
   useEffect(() => {
     getCars();
-  }, []);
+  }, [fuel, year, manufacturer, model, limit]);
 
-  const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
+  // const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
 
   return (
     <main className="overflow-hidden">
@@ -55,23 +53,39 @@ export default async function Home() {
           <p>Explore the cars you might like.</p>
         </div>
         <div className="home__filters">
-          <SearchBar />
+          <SearchBar {...{ setModel, setManufacturer }} />
           <div className="home__filter-container">
-            <CustomFilter title="Fuel" options={fuels} />
-            <CustomFilter title="Year" options={yearsOfProduction} />
+            <CustomFilter title="Fuel" options={fuels} setFilter={setFuel} />
+            <CustomFilter
+              title="Year"
+              options={yearsOfProduction}
+              setFilter={setYear}
+            />
           </div>
         </div>
 
-        {!isDataEmpty ? (
-          <section>
-            <div className="home__cars-wrapper">
-              {allCars?.map((car) => (
-                <CarCard car={car} />
-              ))}
-            </div>
+        {allCars.length > 0 ? (
+          <section className="home__cars-wrapper">
+            {allCars?.map((car) => (
+              <CarCard car={car} />
+            ))}
+
+            {loading && (
+              <div className="w-full mt-14 flex-center">
+                <Image
+                  src="/loader.svg"
+                  alt="loader"
+                  width={50}
+                  height={50}
+                  className="object-contain"
+                />
+              </div>
+            )}
+
             <ShowMore
-              isNext={limit > allCars.length}
               pageNumber={(limit || 10) / 10}
+              isNext={limit > allCars.length}
+              setLimit={setLimit}
             />
           </section>
         ) : (
@@ -82,4 +96,7 @@ export default async function Home() {
       </div>
     </main>
   );
-}
+};
+export default dynamic(() => Promise.resolve(Home), {
+  ssr: false,
+});
