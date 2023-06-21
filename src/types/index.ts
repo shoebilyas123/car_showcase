@@ -53,3 +53,8 @@ export interface ICustomFilter {
   title: string;
   setFilter: React.Dispatch<React.SetStateAction<any>>;
 }
+
+export interface ISearchBarParams {
+  setModel: React.Dispatch<React.SetStateAction<string>>;
+  setManufacturer: React.Dispatch<React.SetStateAction<string>>;
+}

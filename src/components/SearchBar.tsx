@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import SearchManufacturer from "./SearchManufacturer";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { ISearchBarParams } from "~/types";
 
 const SearchButton = ({ otherClasses }: { otherClasses: string }) => {
   return (
@@ -19,7 +20,7 @@ const SearchButton = ({ otherClasses }: { otherClasses: string }) => {
   );
 };
 
-const SearchBar = ({ setModel, setManufacturer }) => {
+const SearchBar = ({ setModel, setManufacturer }: ISearchBarParams) => {
   const [searchManufacturer, setSearchManufacturer] = useState("");
   const [searchModel, setSearchModel] = useState("");
 
